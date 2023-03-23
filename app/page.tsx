@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
+import { NextPage } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -20,11 +21,11 @@ export default function Home() {
           >
             By{' '}
             <Image
-              src="/vercel.svg"
+              src="/logo.png"
               alt="Vercel Logo"
               className={styles.vercelLogo}
-              width={100}
-              height={24}
+              width={150}
+              height={48}
               priority
             />
           </a>
@@ -32,16 +33,9 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+        <p className=' text-4xl md:text-6xl font-bold'>Assessment</p>
         <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
+          <p className='text-4xl font-bold'>HQ</p>
         </div>
       </div>
 
@@ -86,6 +80,9 @@ export default function Home() {
           </p>
         </a>
       </div>
+
     </main>
   )
 }
+
+export default Home
