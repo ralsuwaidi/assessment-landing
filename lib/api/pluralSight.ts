@@ -1,8 +1,25 @@
 import ApolloClient, { InMemoryCache } from "apollo-boost";
 import gql from "graphql-tag";
 
+export type SkillResultType = {
+  userId: string;
+  skillName: string;
+  quintileLevel:
+    | "novice"
+    | "proficient-emerging"
+    | "proficient-average"
+    | "proficient-above-average"
+    | "expert";
+  completedOn: string;
+};
+
 type PluralSightType = {
-  getAllData: () => Promise<any>;
+  getSkills: (first: number) => Promise<any>;
+  getSkillResults: (first: number) => Promise<SkillResultType[]>;
+  getUsers: (ids: string[]) => Promise<any>;
+  getTotalSkills: () => Promise<number>;
+  getTotalUsers: () => Promise<number>;
+  getTotalContent: () => Promise<number>;
 };
 
 const client = new ApolloClient({
@@ -14,48 +31,92 @@ const client = new ApolloClient({
 });
 
 const PluralSight: PluralSightType = {
-  getAllData: async () => {
-    const skills = await client.query({
+  getSkills: (first: number = 10) =>
+    client.query({
       query: gql`
         query {
-          skillAssessmentCatalog(first: 10) {
+          skillAssessmentCatalog(first: ${first}) {
             nodes {
               name
             }
           }
         }
       `,
-    });
+    }),
 
-    const totalSkills = await client.query({
+  getSkillResults: async (first: number = 10): Promise<SkillResultType[]> => {
+    const { data } = await client.query({
       query: gql`
         query {
-          skillCatalog {
+          skillAssessmentResults(first: ${first}) {
+            nodes {
+              userId
+              quintileLevel
+              completedOn
+              skillName
+            }
+          }
+        }
+      `,
+    });
+    return data.skillAssessmentResults.nodes;
+  },
+
+  getTotalSkills: async () => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          skillAssessmentCatalog {
             totalCount
           }
         }
       `,
     });
+    return data.skillAssessmentCatalog.totalCount;
+  },
 
-    const users = await client.query({
+  getUsers: async (ids: string[]) => {
+    const { data } = await client.query({
       query: gql`
         query {
-          users(first: 10) {
+          users(first: ${ids.length}, filter: {ids: [${ids
+        .map((id) => `"${id}"`)
+        .join(",")} ]}) {
             nodes {
-              firstName
-              lastName
+              id
               email
             }
           }
         }
       `,
     });
+    return data.users.nodes;
+  },
 
-    return {
-      skills: skills.data.skillAssessmentCatalog.nodes,
-      totalSkills: totalSkills.data.skillCatalog.totalCount,
-      users: users.data.users.nodes,
-    };
+  getTotalUsers: async () => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          users {
+            totalCount
+          }
+        }
+      `,
+    });
+    return data.users.totalCount;
+  },
+
+  getTotalContent: async () => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          skillAssessmentResults {
+            totalCount
+          }
+        }
+      `,
+    });
+    return data.skillAssessmentResults.totalCount;
   },
 };
 

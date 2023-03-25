@@ -36,8 +36,7 @@ export default function Hero(heroProp: HeroType) {
                                 x2="-78.208"
                                 y1=".177"
                                 y2="474.645"
-                                gradientUnits="userSpaceOnUse"
-                            >
+                                gradientUnits="userSpaceOnUse">
                                 <stop stopColor="#9089FC" />
                                 <stop offset={1} stopColor="#c480ff" />
                             </linearGradient>
@@ -65,7 +64,7 @@ export default function Hero(heroProp: HeroType) {
                             {heroProp.primaryButton &&
                                 <a
                                     href={heroProp.primaryButton.url}
-                                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="rounded-md bg-gradient-to-r from-gray-900 via-purple-900 to-blue-500 hover:from-pink-500 hover:to-yellow-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     {heroProp.primaryButton.text}
                                 </a>
