@@ -15,20 +15,11 @@ import { useEffect, useState } from "react";
 
 
 export default function Home() {
-  const [landingData, setLandingData] = useState<LandingType>(IntialLandingData)
   const [totalContent, setTotalContent] = useState<number>(0)
   const [totalSkills, setTotalSkills] = useState<number>(0)
   const [totalUsers, setTotalUsers] = useState<number>(0)
   const [experts, setExperts] = useState<UserProfileType[]>()
 
-
-  useEffect(() => {
-    LandingApi.getLanding().then((response) => {
-      setLandingData(response.data.data.attributes)
-    }).catch((error) => {
-      console.error(error);
-    });
-  }, []);
 
   useEffect(() => {
     PluralSight.getTotalContent().then((totalContent) => {
@@ -69,7 +60,7 @@ export default function Home() {
     <main className="">
       <NavigationBar />
       <Hero
-        title={landingData.title}
+        title="CodersHQ Assessment"
         description={"Get assessed and show the world your skillset"}
         primaryButton={{
           text: "Get Assessed",
