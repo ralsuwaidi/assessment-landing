@@ -2,7 +2,7 @@
 
 import NavigationBar from "@/components/NavigationBar";
 import LoadingTable from "@/components/common/LoadingTable";
-import CallToAction from "@/components/landing/Cta";
+import CallToAction from "@/components/landing/CallToAction";
 import Features from "@/components/landing/Features";
 import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/Hero";
