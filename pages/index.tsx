@@ -1,11 +1,11 @@
 'use client'
 
-import Hero from "@/components/landing/Hero";
 import NavigationBar from "@/components/NavigationBar";
 import LoadingTable from "@/components/common/LoadingTable";
 import CallToAction from "@/components/landing/Cta";
 import Features from "@/components/landing/Features";
 import Footer from "@/components/landing/Footer";
+import Hero from "@/components/landing/Hero";
 import Leaderboard from "@/components/landing/Leaderboard";
 import PluralSight from "@/lib/api/pluralSight";
 import { GetExperts, UserProfileType } from "@/lib/utils/sort-experts";
