@@ -1,15 +1,13 @@
 'use client'
 
-import Hero from "@/components/Hero";
+import Hero from "@/components/landing/Hero";
 import NavigationBar from "@/components/NavigationBar";
 import LoadingTable from "@/components/common/LoadingTable";
-import CallToAction from "@/components/landing/CTA";
+import CallToAction from "@/components/landing/Cta";
 import Features from "@/components/landing/Features";
 import Footer from "@/components/landing/Footer";
 import Leaderboard from "@/components/landing/Leaderboard";
-import LandingApi from "@/lib/api/landing";
 import PluralSight from "@/lib/api/pluralSight";
-import { LandingType, IntialLandingData } from "@/lib/utils/landing-type";
 import { GetExperts, UserProfileType } from "@/lib/utils/sort-experts";
 import { useEffect, useState } from "react";
 
@@ -47,12 +45,6 @@ export default function Home() {
     }).catch((error) => {
       console.error(error);
     });
-
-    // LandingApi.getProfiles().then((profile) => {
-    //   console.log(profile)
-    // }).catch((error) => {
-    //   console.error(error);
-    // });
   }, []);
 
 
@@ -61,14 +53,14 @@ export default function Home() {
       <NavigationBar />
       <Hero
         title="CodersHQ Assessment"
-        description={"Get assessed and show the world your skillset"}
+        description={"Book a slot and get your coding skills assesed at our physical space in CodersHQ, Emirates Towers"}
         primaryButton={{
-          text: "Get Assessed",
-          url: "dw"
+          text: "Book a Slot",
+          url: "https://calendly.com/chq-assessment/get-assessed"
         }}
         secondaryButton={{
           text: "Learn More",
-          url: "dw"
+          url: "https://ai.gov.ae/hqast/"
         }}
       />
 
