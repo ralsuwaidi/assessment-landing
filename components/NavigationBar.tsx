@@ -6,6 +6,7 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 
 const navigation = [
     { name: 'Product', href: '#' },
@@ -75,9 +76,9 @@ export default function NavigationBar() {
 
                 </div>}
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    </Link>
                 </div>
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
