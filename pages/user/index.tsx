@@ -1,5 +1,7 @@
 import React from 'react';
 import { useUser, withPageAuthRequired, WithPageAuthRequiredProps } from '@auth0/nextjs-auth0/client';
+import NavigationBar from '@/components/common/NavigationBar';
+import PageHeading from '@/components/common/PageHeading';
 
 
 export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
@@ -11,12 +13,14 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
 
     return (
         <div>
-            {user?.picture &&
-                <img src={user?.picture} alt="sdw" />
-            }
+            <NavigationBar />
 
-            <h2>{user?.name}</h2>
-            <p>{user?.email}</p>
+
+            <div>
+                <PageHeading />
+            </div>
+
+
         </div>
     )
 }

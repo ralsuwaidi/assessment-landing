@@ -1,6 +1,6 @@
 'use client'
 
-import NavigationBar from "@/components/NavigationBar";
+import NavigationBar from "@/components/common/NavigationBar";
 import LoadingTable from "@/components/common/LoadingTable";
 import CallToAction from "@/components/landing/CallToAction";
 import Features from "@/components/landing/Features";
@@ -10,6 +10,7 @@ import Leaderboard from "@/components/landing/Leaderboard";
 import PluralSight from "@/lib/api/pluralSight";
 import { GetExperts, UserProfileType } from "@/lib/utils/sort-experts";
 import { useEffect, useState } from "react";
+import DefaultPage from "@/components/layouts/DefaultPage";
 
 
 export default function Home() {
@@ -49,8 +50,7 @@ export default function Home() {
 
 
   return (
-    <main className="">
-      <NavigationBar />
+    <DefaultPage>
       <Hero
         title="CodersHQ Assessment"
         description={"Book a slot and get your coding skills assesed at our physical space in CodersHQ, Emirates Towers"}
@@ -91,8 +91,6 @@ export default function Home() {
         </div>
       </div>
 
-
-
       {experts ? < Leaderboard experts={experts.slice(0, 10)} /> :
         <div className=" mx-auto">
           <LoadingTable />
@@ -103,11 +101,6 @@ export default function Home() {
       </div>
 
       <CallToAction />
-
-      <Footer />
-
-      <br></br>
-
-    </main>
+    </DefaultPage>
   )
 }
