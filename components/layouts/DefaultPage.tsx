@@ -6,10 +6,12 @@ import Footer from "../landing/Footer";
 export default function DefaultPage({ children: children }: { children: React.ReactNode }) {
     return (
         <>
-            <NavigationBar />
-            <main className="max-w-7xl mx-auto">
-                {children}
-            </main>
+            <div className=" min-h-[80vh]">
+                <NavigationBar />
+                <main className="max-w-7xl mx-auto">
+                    {children}
+                </main>
+            </div>
             <Footer />
         </>
     )

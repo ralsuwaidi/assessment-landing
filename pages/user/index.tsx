@@ -14,13 +14,9 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
     return (
         <div>
             <NavigationBar />
-
-
             <div>
                 <PageHeading />
             </div>
-
-
         </div>
     )
 }

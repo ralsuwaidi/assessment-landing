@@ -9,6 +9,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { Avatar, Dropdown } from 'flowbite-react';
 
+
 const navigation = [
     { name: 'Product', href: '#' },
     { name: 'Features', href: '#' },
@@ -20,8 +21,9 @@ export default function NavigationBar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const { user, isLoading } = useUser();
 
+
     return (
-        <header className=" inset-x-0 top-0 z-50">
+        <header className=" relative inset-x-0 top-0 z-50">
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
