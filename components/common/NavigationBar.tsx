@@ -12,9 +12,6 @@ import { Avatar, Dropdown } from 'flowbite-react';
 
 const navigation = [
     { name: 'Product', href: '#' },
-    { name: 'Features', href: '#' },
-    { name: 'Marketplace', href: '#' },
-    { name: 'Company', href: '#' },
 ]
 
 export default function NavigationBar() {
@@ -127,12 +124,41 @@ export default function NavigationBar() {
                                 ))}
                             </div>
                             <div className="py-6">
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Log in
-                                </a>
+
+                                {user ? (
+                                    <Dropdown
+                                        label={<Avatar alt="User settings" img={user.picture ? user.picture : "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded={true} />}
+                                        arrowIcon={false}
+                                        inline={true}
+                                    >
+                                        <Dropdown.Header>
+                                            <span className="block text-sm">
+                                                {user.name ? user.name : "User"}
+                                            </span>
+                                            <span className="block truncate text-sm font-medium">
+                                                {user.email ? user.email : "No Email"}
+                                            </span>
+                                        </Dropdown.Header>
+                                        <Dropdown.Item>
+                                            Dashboard
+                                        </Dropdown.Item>
+                                        <Dropdown.Item>
+                                            Settings
+                                        </Dropdown.Item>
+                                        <Dropdown.Divider />
+                                        <Dropdown.Item>
+                                            <Link href="/api/auth/logout" >
+                                                Sign out
+                                            </Link>
+                                        </Dropdown.Item>
+                                    </Dropdown>
+                                ) : (
+                                    <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
+                                        Log in <span aria-hidden="true">&rarr;</span>
+                                    </Link>
+                                )
+                                }
+
                             </div>
                         </div>
                     </div>
