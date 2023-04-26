@@ -42,7 +42,7 @@ export default function Password() {
 
         </div >
     ) : (
-        <div>
+        <div className="px-2">
             <label
                 htmlFor="password"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -54,11 +54,11 @@ export default function Password() {
                     type="password"
                     name="password"
                     id="password"
-                    className="block min-w-[70vw] rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block sm:min-w-[70vw] w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={password}
                     onChange={handlePasswordChange}
                 />
-                <p className="mt-3 text-sm leading-6 text-gray-600 max-w-sm sm:max-w-none">The assessment can only be done at Coders HQ. Please <a href="#" className="font-medium text-indigo-600">book</a> a slot to get assessed</p>
+                <p className="mt-3 text-sm leading-6 text-gray-600 max-w-sm sm:max-w-none">The assessment can only be done at Coders HQ. Please <a href="https://calendly.com/chq-assessment/get-assessed" className="font-medium text-indigo-600">book</a> a slot to get assessed</p>
 
             </div>
         </div>
