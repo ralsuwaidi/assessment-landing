@@ -31,8 +31,8 @@ export default function Home() {
               url: "https://calendly.com/chq-assessment/get-assessed"
             }}
             secondaryButton={{
-              text: "Learn More",
-              url: "https://ai.gov.ae/hqast/"
+              text: "Log in",
+              url: "/api/auth/login"
             }}
           />
           <Features />
