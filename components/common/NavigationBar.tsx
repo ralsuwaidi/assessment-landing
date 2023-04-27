@@ -11,7 +11,13 @@ import { Avatar, Dropdown } from 'flowbite-react';
 
 
 const navigation = [
-    { name: 'Product', href: '#' },
+    { name: 'About', href: '/landing' },
+]
+
+// after logging in
+const profileNavigation = [
+    { name: 'Assessment', link: '/' },
+    { name: 'Profile', link: '/profile' },
 ]
 
 export default function NavigationBar() {
@@ -32,63 +38,68 @@ export default function NavigationBar() {
                         />
                     </a>
                 </div>
-                <div className="flex lg:hidden">
-                    <button
-                        type="button"
-                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                        onClick={() => setMobileMenuOpen(true)}
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                </div>
-                <div className="hidden lg:flex lg:gap-x-12">
-                    {navigation.map((item) => (
-                        <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
-                            {item.name}
-                        </a>
-                    ))}
-                </div>
-
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-
-
-                    {user ? (
-                        <Dropdown
-                            label={<Avatar alt="User settings" img={user.picture ? user.picture : "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded={true} />}
-                            arrowIcon={false}
-                            inline={true}
+                <div className='flex'>
+                    <div className="flex lg:hidden">
+                        <button
+                            type="button"
+                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                            onClick={() => setMobileMenuOpen(true)}
                         >
-                            <Dropdown.Header>
-                                <span className="block text-sm">
-                                    {user.name ? user.name : "User"}
-                                </span>
-                                <span className="block truncate text-sm font-medium">
-                                    {user.email ? user.email : "No Email"}
-                                </span>
-                            </Dropdown.Header>
-                            <Dropdown.Item>
-                                Dashboard
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                                Settings
-                            </Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item>
-                                <Link href="/api/auth/logout" >
-                                    Sign out
-                                </Link>
-                            </Dropdown.Item>
-                        </Dropdown>
-                    ) : (
-                        <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
-                            Log in <span aria-hidden="true">&rarr;</span>
-                        </Link>
-                    )
-                    }
+                            <span className="sr-only">Open main menu</span>
+                            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                    </div>
+                    <div className="hidden lg:flex lg:gap-x-12 items-center justify-center">
+                        {navigation.map((item) => (
+                            <a key={item.name} href={item.href} className="text-sm font-semibold  leading-6 text-gray-900 ">
+                                {item.name}
+                            </a>
+                        ))}
+                    </div>
 
+                    <div className=" lg:flex lg:flex-1 lg:justify-end ml-5">
+
+
+                        {user ? (
+                            <Dropdown
+                                label={<Avatar alt="User settings" img={user.picture ? user.picture : "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded={true} />}
+                                arrowIcon={false}
+                                inline={true}
+                            >
+                                <Dropdown.Header>
+                                    <span className="block text-sm">
+                                        {user.name ? user.name : "User"}
+                                    </span>
+                                    <span className="block truncate text-sm font-medium">
+                                        {user.email ? user.email : "No Email"}
+                                    </span>
+                                </Dropdown.Header>
+                                {profileNavigation.map((item) => (
+                                    <Dropdown.Item key={item.name}>
+                                        <Link href={item.link}>
+                                            {item.name}
+                                        </Link>
+                                    </Dropdown.Item>
+                                ))}
+                                <Dropdown.Divider />
+                                <Dropdown.Item>
+                                    <Link href="/api/auth/logout" >
+                                        Sign out
+                                    </Link>
+                                </Dropdown.Item>
+                            </Dropdown>
+                        ) : (
+                            <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
+                                Log in <span aria-hidden="true">&rarr;</span>
+                            </Link>
+                        )
+                        }
+
+                    </div>
                 </div>
+
             </nav>
+
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
                 <div className="fixed inset-0 z-50" />
                 <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -139,12 +150,13 @@ export default function NavigationBar() {
                                                 {user.email ? user.email : "No Email"}
                                             </span>
                                         </Dropdown.Header>
-                                        <Dropdown.Item>
-                                            Dashboard
-                                        </Dropdown.Item>
-                                        <Dropdown.Item>
-                                            Settings
-                                        </Dropdown.Item>
+                                        {profileNavigation.map((item) => (
+                                            <Dropdown.Item key={item.name}>
+                                                <Link href={item.link}>
+                                                    {item.name}
+                                                </Link>
+                                            </Dropdown.Item>
+                                        ))}
                                         <Dropdown.Divider />
                                         <Dropdown.Item>
                                             <Link href="/api/auth/logout" >
