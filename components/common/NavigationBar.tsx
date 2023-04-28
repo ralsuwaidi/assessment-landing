@@ -75,18 +75,18 @@ export default function NavigationBar() {
                                     </span>
                                 </Dropdown.Header>
                                 {profileNavigation.map((item) => (
-                                    <Dropdown.Item key={item.name}>
-                                        <Link href={item.link}>
+                                    <Link href={item.link} key={item.name}>
+                                        <Dropdown.Item >
                                             {item.name}
-                                        </Link>
-                                    </Dropdown.Item>
+                                        </Dropdown.Item>
+                                    </Link>
                                 ))}
                                 <Dropdown.Divider />
-                                <Dropdown.Item>
-                                    <Link href="/api/auth/logout" >
+                                <Link href="/api/auth/logout" >
+                                    <Dropdown.Item>
                                         Sign out
-                                    </Link>
-                                </Dropdown.Item>
+                                    </Dropdown.Item>
+                                </Link>
                             </Dropdown>
                         ) : (
                             <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
@@ -136,37 +136,9 @@ export default function NavigationBar() {
                             </div>
                             <div className="py-6">
 
-                                {user ? (
-                                    <Dropdown
-                                        label={<Avatar alt="User settings" img={user.picture ? user.picture : "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded={true} />}
-                                        arrowIcon={false}
-                                        inline={true}
-                                    >
-                                        <Dropdown.Header>
-                                            <span className="block text-sm">
-                                                {user.name ? user.name : "User"}
-                                            </span>
-                                            <span className="block truncate text-sm font-medium">
-                                                {user.email ? user.email : "No Email"}
-                                            </span>
-                                        </Dropdown.Header>
-                                        {profileNavigation.map((item) => (
-                                            <Dropdown.Item key={item.name}>
-                                                <Link href={item.link}>
-                                                    {item.name}
-                                                </Link>
-                                            </Dropdown.Item>
-                                        ))}
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item>
-                                            <Link href="/api/auth/logout" >
-                                                Sign out
-                                            </Link>
-                                        </Dropdown.Item>
-                                    </Dropdown>
-                                ) : (
+                                {!user && (
                                     <Link href="/api/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
-                                        Log in <span aria-hidden="true">&rarr;</span>
+                                        Log in
                                     </Link>
                                 )
                                 }
