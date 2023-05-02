@@ -7,8 +7,6 @@ import DefaultPage from "@/components/layouts/DefaultPage";
 
 export default function Home() {
 
-
-
     return (
         <DefaultPage>
 
