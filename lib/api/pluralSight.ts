@@ -17,6 +17,8 @@ type PluralSightType = {
   getSkills: (first: number) => Promise<any>;
   getSkillResults: (first: number) => Promise<SkillResultType[]>;
   getUsers: (ids: string[]) => Promise<any>;
+  getUsersByEmail: (emails: string[]) => Promise<any>;
+  getSkillsByUserId: (userId: string) => Promise<SkillResultType[]>;
   getTotalSkills: () => Promise<number>;
   getTotalUsers: () => Promise<number>;
   getTotalContent: () => Promise<number>;
@@ -75,12 +77,50 @@ const PluralSight: PluralSightType = {
     return data.skillAssessmentCatalog.totalCount;
   },
 
+  getSkillsByUserId: async (userId: string) => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          skillAssessmentResults(first: 10, filter: {userIds: [${
+            `"` + userId + `"`
+          }]}) {
+            nodes {
+              userId
+              quintileLevel
+              completedOn
+              skillName
+            }
+          }
+        }
+      `,
+    });
+    return data.skillAssessmentResults.nodes;
+  },
+
   getUsers: async (ids: string[]) => {
     const { data } = await client.query({
       query: gql`
         query {
           users(first: ${ids.length}, filter: {ids: [${ids
         .map((id) => `"${id}"`)
+        .join(",")} ]}) {
+            nodes {
+              id
+              email
+            }
+          }
+        }
+      `,
+    });
+    return data.users.nodes;
+  },
+
+  getUsersByEmail: async (emails: string[]) => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          users(first: ${emails.length}, filter: {emails: [${emails
+        .map((email) => `"${email}"`)
         .join(",")} ]}) {
             nodes {
               id
