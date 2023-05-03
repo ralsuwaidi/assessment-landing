@@ -1,6 +1,7 @@
 import { SkillResultType } from '@/lib/api/pluralSight';
 import { ProfileType } from '@/lib/utils/profile-type';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 import React from 'react'; // we need this to make JSX compile
 
 
@@ -38,11 +39,23 @@ export const SkillResults = ({ skills }: { skills: SkillResultType[] }) => (
   <div className=' mx-2 sm:grid sm:grid-cols-2 grid grid-cols-1 gap-2 sm:mx-4 mt-3'>
     {skills.map((skill: SkillResultType) => (
       <div key={skill.skillName} className='border rounded-md border-slate-300'>
-        <p className='p-2 pt-3 mx-2 text-slate-400'>{skill.skillName}</p>
+        <p className='p-2 pt-6 mx-2'>{skill.skillName}</p>
         <Detail title="Score" value={skill.quintileLevel} />
         <Detail title="Completed" value={skill.completedOn} />
       </div>
     ))}
+  </div>
+)
+
+
+export const GetAssessed = () => (
+  <div className='sm:p-4 border border-slate-300 rounded-md sm:mx-4 mx-2'>
+    <div className='px-4 w-full mt-2'>
+      <p>Get Assessed</p>
+      <div className=' my-4 p-4 w-full text-center rounded bg-slate-100'>
+        <p className='text-sm'>No assessments found. <Link href='/' className=' text-blue-600'>Get assessed to see your results here</Link></p>
+      </div>
+    </div>
   </div>
 )
 
@@ -89,8 +102,8 @@ export const NoProfile = () => (
  */
 const Detail = (DetailProp: { title: string, value?: any }): JSX.Element => (
   <div className='p-4'>
-    <p className='text-slate-400'>{DetailProp.title}</p>
-    <p className='truncate'>{DetailProp.value ?? "none"}</p>
+    <p className='text-slate-400 text-sm'>{DetailProp.title}</p>
+    <p className='truncate text-sm'>{DetailProp.value ?? "none"}</p>
   </div>
 );
 

@@ -60,7 +60,7 @@ export default function NavigationBar() {
                     <div className=" lg:flex lg:flex-1 lg:justify-end ml-5">
 
 
-                        {user ? (
+                        {user && !isLoading ? (
                             <Dropdown
                                 label={<Avatar alt="User settings" img={user.picture ? user.picture : "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded={true} />}
                                 arrowIcon={false}
