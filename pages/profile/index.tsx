@@ -40,9 +40,21 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
                             // Set the user's skills
                             setSkills(skills);
                         }
+                    } else {
+                        // find user based on codershq_id
+                        const pluralUsers = await PluralSight.getUsersByEmail([`${user['codershq_id']}@codershq.ae`]);
+                        // Check if pluralUsers is defined and has at least one element
+                        if (pluralUsers?.[0]?.id) {
+                            // If so, fetch the user's skills
+                            const skills = await PluralSight.getSkillsByUserId(pluralUsers[0].id);
+                            // Set the user's skills
+                            setSkills(skills);
+                        }
                     }
                 } else {
-                    // TODO: create profile here with coderhq_id
+                    const response = await ProfileApi.createProfile(user['codershq_id'] as string, user.name ? user.name : undefined);
+                    console.log(response)
+                    setProfile(response)
                 }
 
                 // Set isDone to true to indicate that data fetching is complete
@@ -55,7 +67,7 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
         // Call the fetchData function
         fetchData();
         // Pass in user as a dependency to rerun the effect when user changes
-    }, [user]);
+    }, [user, profile, skills, isDone]);
 
 
 
