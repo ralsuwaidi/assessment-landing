@@ -30,14 +30,14 @@ export default function Password() {
                     <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">You are ready to be assessed. Please click the button below to get started. Good luck!</p>
                     <div className="flex  flex-row justify-center space-y-0 space-x-4">
 
-                        <a href="/api/sso">
+                        <Link href="/api/sso">
                             <Image
                                 src="/pluralsight_logo.jpeg"
                                 width={75}
                                 height={75}
                                 alt="Pluralsight Logo"
                             />
-                        </a>
+                        </Link>
 
 
                     </div>
