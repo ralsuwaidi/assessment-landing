@@ -30,6 +30,13 @@ type ProfileType = {
     codershqId: string,
     name?: string
   ) => Promise<any | undefined>;
+  /**
+    Retrieves the profile information of a user with the given CodersHQ ID. *
+    @async
+    @param {string} email - The email of the logged in user
+    @returns {boolean} - True if the password is correct, else false
+  */
+  checkPassword: (email: string, password: string) => Promise<boolean>;
 };
 
 const SERVER_BASE_URL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
@@ -40,6 +47,8 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+
+
 
 const ProfileApi: ProfileType = {
   all: async (page = 0, limit = 100) => {
@@ -97,6 +106,28 @@ const ProfileApi: ProfileType = {
       return null;
     }
   },
+
+  checkPassword: async (email: string, password: string) => {
+    const response = await axios.get(
+      `${SERVER_BASE_URL}assessment-passwords?filters[email][$eq]=${email}`,
+      config
+    );
+    const { data, meta } = await response.data;
+    try {
+      if (data.length > 0) {
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          if (password == element['attributes']['password']) {
+            return true
+          }
+        }
+      };
+      return false
+    } catch (error) {
+      return false;
+    }
+  },
+
 };
 
 export default ProfileApi;

@@ -1,30 +1,36 @@
 import { useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
+import ProfileApi from "@/lib/api/profile";
+import { useUser } from "@auth0/nextjs-auth0/client";
+
 
 
 export default function Password() {
     const [password, setPassword] = useState("");
     const [passwordCorrect, setPasswordCorrect] = useState(false);
+    const { user, error, isLoading } = useUser();
 
     const handlePasswordChange = (event: any) => {
         setPassword(event.target.value);
-        console.log(event.target.value);
-        if (process.env.NEXT_PUBLIC_PLURALSIGHT_PASSWORD == event.target.value) {
-            console.log("Password correct");
-            setPasswordCorrect(true);
+        if (user?.email) {
+            ProfileApi.checkPassword(user.email, event.target.value).then((value) => {
+                if (value) {
+                    setPasswordCorrect(true);
+                }
+            })
         }
     };
 
     return passwordCorrect ? (
         <div>
-            <section className="bg-white dark:bg-gray-900">
+            <div className="bg-white dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Password Correct</h1>
                     <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">You are ready to be assessed. Please click the button below to get started. Good luck!</p>
                     <div className="flex  flex-row justify-center space-y-0 space-x-4">
 
-                        <a href="#">
+                        <a href="/api/sso">
                             <Image
                                 src="/pluralsight_logo.jpeg"
                                 width={75}
@@ -36,7 +42,7 @@ export default function Password() {
 
                     </div>
                 </div>
-            </section>
+            </div>
 
         </div >
     ) : (

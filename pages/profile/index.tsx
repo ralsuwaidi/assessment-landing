@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUser, withPageAuthRequired, WithPageAuthRequiredProps } from '@auth0/nextjs-auth0/client';
 import DefaultPage from '@/components/layouts/DefaultPage';
 import ProfileApi from '@/lib/api/profile';
@@ -15,61 +15,57 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
     const [skills, setSkills] = useState<SkillResultType[] | []>([]);
     const [isDone, setIsDone] = useState(false);
 
-    useEffect(() => {
-        async function fetchData() {
-            // Check if user is defined before proceeding
-            if (!user) {
-                return;
-            }
-
-            try {
-                // Fetch the user's profile
-                const res = await ProfileApi.getProfile(user['codershq_id'] as string);
-
-                if (res) {
-                    // Set the user's profile if it exists
-                    setProfile(res);
-
-                    if (res.user_id) {
-                        // If the user has an old user ID, fetch their skills from PluralSight
-                        const pluralUsers = await PluralSight.getUsersByEmail([`${res.user_id}@codershq.ae`]);
-                        // Check if pluralUsers is defined and has at least one element
-                        if (pluralUsers?.[0]?.id) {
-                            // If so, fetch the user's skills
-                            const skills = await PluralSight.getSkillsByUserId(pluralUsers[0].id);
-                            // Set the user's skills
-                            setSkills(skills);
-                        }
-                    } else {
-                        // find user based on codershq_id
-                        const pluralUsers = await PluralSight.getUsersByEmail([`${user['codershq_id']}@codershq.ae`]);
-                        // Check if pluralUsers is defined and has at least one element
-                        if (pluralUsers?.[0]?.id) {
-                            // If so, fetch the user's skills
-                            const skills = await PluralSight.getSkillsByUserId(pluralUsers[0].id);
-                            // Set the user's skills
-                            setSkills(skills);
-                        }
-                    }
-                } else {
-                    const response = await ProfileApi.createProfile(user['codershq_id'] as string, user.name ? user.name : undefined);
-                    console.log(response)
-                    setProfile(response)
-                }
-
-                // Set isDone to true to indicate that data fetching is complete
-                setIsDone(true);
-            } catch (error) {
-                console.error(error);
-            }
+    const fetchData = useCallback(async () => {
+        // Check if user is defined before proceeding
+        if (!user) {
+            return;
         }
 
-        // Call the fetchData function
+        try {
+            // Fetch the user's profile
+            const res = await ProfileApi.getProfile(user['codershq_id'] as string);
+
+            if (res) {
+                // Set the user's profile if it exists
+                setProfile(res);
+
+                if (res.user_id) {
+                    // If the user has an old user ID, fetch their skills from PluralSight
+                    const pluralUsers = await PluralSight.getUsersByEmail([`${res.user_id}@codershq.ae`]);
+                    // Check if pluralUsers is defined and has at least one element
+                    if (pluralUsers?.[0]?.id) {
+                        // If so, fetch the user's skills
+                        const skills = await PluralSight.getSkillsByUserId(pluralUsers[0].id);
+                        // Set the user's skills
+                        setSkills(skills);
+                    }
+                } else {
+                    // find user based on codershq_id
+                    const pluralUsers = await PluralSight.getUsersByEmail([`${user['codershq_id']}@codershq.ae`]);
+                    // Check if pluralUsers is defined and has at least one element
+                    if (pluralUsers?.[0]?.id) {
+                        // If so, fetch the user's skills
+                        const skills = await PluralSight.getSkillsByUserId(pluralUsers[0].id);
+                        // Set the user's skills
+                        setSkills(skills);
+                    }
+                }
+            } else {
+                const response = await ProfileApi.createProfile(user['codershq_id'] as string, user.name ? user.name : undefined);
+                console.log(response)
+                setProfile(response)
+            }
+
+            // Set isDone to true to indicate that data fetching is complete
+            setIsDone(true);
+        } catch (error) {
+            console.error(error);
+        }
+    }, [user]);
+
+    useEffect(() => {
         fetchData();
-        // Pass in user as a dependency to rerun the effect when user changes
-    }, [user, profile, skills, isDone]);
-
-
+    }, [fetchData]);
 
 
     if (isLoading) return <div>Loading...</div>;
