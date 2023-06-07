@@ -52,7 +52,6 @@ export const Profile: React.FC<WithPageAuthRequiredProps> = () => {
                 }
             } else {
                 const response = await ProfileApi.createProfile(user['codershq_id'] as string, user.name ? user.name : undefined);
-                console.log(response)
                 setProfile(response)
             }
 

@@ -99,7 +99,6 @@ const ProfileApi: ProfileType = {
       config
     );
     const { data, meta } = await response.data;
-    console.log(data);
     try {
       return data.attributes;
     } catch (error) {
@@ -125,7 +124,6 @@ const ProfileApi: ProfileType = {
       });
 
       const { data, meta } = response.data;
-      console.log(data)
       if (data.length > 0) {
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
