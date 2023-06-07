@@ -108,25 +108,39 @@ const ProfileApi: ProfileType = {
   },
 
   checkPassword: async (email: string, password: string) => {
-    const response = await axios.get(
-      `${SERVER_BASE_URL}assessment-passwords?filters[email][$eq]=${email}`,
-      config
-    );
-    const { data, meta } = await response.data;
     try {
+
+      // Calculate the date 10 minutes ago
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+
+      // Adjust the date for the UAE locale (subtract 4 hours)
+      tenMinutesAgo.setHours(tenMinutesAgo.getHours());
+
+      const response = await axios.get(`${SERVER_BASE_URL}assessment-passwords`, {
+        params: {
+          "filters[email][$eq]": email,
+          "filters[createdAt][$gt]": tenMinutesAgo.toISOString(),
+        },
+        ...config
+      });
+
+      const { data, meta } = response.data;
+      console.log(data)
       if (data.length > 0) {
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
-          if (password == element['attributes']['password']) {
-            return true
+          if (password === element.attributes.password) {
+            return true;
           }
         }
-      };
-      return false
+      }
+
+      return false;
     } catch (error) {
       return false;
     }
   },
+
 
 };
 
